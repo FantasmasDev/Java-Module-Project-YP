@@ -4,12 +4,11 @@ public class Main {
         Counter counter = new Counter();
 
         counter.askNumOfPersons();
-
-        Calc calc = new Calc();
-        calc.askItem();
-        calc.askItem();
-        calc.askItem();
-        System.out.println(calc.listOfGoods);
-        System.out.println(calc.totalCoast);
+        if(counter.state) {
+            Calc calc = new Calc();
+            calc.askItem();
+            calc.showTotalList();
+            calc.showTotal(counter.getPersons());
+        }
     }
 }
