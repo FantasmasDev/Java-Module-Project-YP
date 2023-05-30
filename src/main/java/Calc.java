@@ -2,10 +2,10 @@ import java.util.Scanner;
 
 public class Calc {
     String listOfGoods ="";
-    Double totalCoast = 0.00;
+    double totalCoast = 0.00;
 
     public void askItem() {
-        Double itemCoast;
+        double itemCoast;
         do {
             Scanner sc = new Scanner(System.in);
             Scanner secSc = new Scanner(System.in);
@@ -14,7 +14,14 @@ public class Calc {
 
             System.out.println("Введите стоимость товара руб.коп, например 10,45");
             if (sc.hasNextDouble()) {
-                itemCoast = sc.nextDouble();
+                double checkPositive = sc.nextDouble();
+
+                if (checkPositive >= 0) {
+                    itemCoast = checkPositive;
+                } else {
+                    System.out.println("Извините, но вы ввели отрицательное число, перезапустите программу");
+                    break;
+                }
             } else {
                 System.out.println("Извините, но вы ввели не число, перезапустите программу");
                 break;
@@ -39,13 +46,20 @@ public class Calc {
     public void showTotal (int numOfPerson) {
         double numPersons = (double) numOfPerson;
         double total = totalCoast / numPersons;
-        String rub;
-        if (total < 2.00) {
-            rub = " рубль";
-        } else if (total < 5.00) {
-            rub = " рубля";
-        } else {
+        double floorTotal = Math.floor(total);
+        String rub = "";
+        if (floorTotal % 100 >= 11.00 && floorTotal % 100 <= 14.00) {
             rub = " рублей";
+        } else {
+            if (floorTotal % 10 == 1.00) {
+                rub = " рубль";
+            } else if (floorTotal % 10 >= 2.00 && floorTotal % 10 <= 4.00) {
+                rub = " рубля";
+            } else if (floorTotal == 0.00) {
+                rub = " рубль";
+            } else {
+                rub = " рублей";
+            }
         }
 
         System.out.println("Итого: " + String.format("%.2f", total) + rub);
